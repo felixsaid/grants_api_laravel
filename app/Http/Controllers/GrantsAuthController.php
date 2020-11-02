@@ -6,18 +6,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
+use App\Models\Grant;
 
-class UserController extends Controller
+class GrantsAuthController extends Controller
 {
     /**
-     * Create a new UserController instance.
+     * Create a new GrantsAuthController instance.
      *
      * @return void
      */
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->guard = "api";
-    }
+    }   
 
     /**
      * Get a JWT via given credentials.
@@ -84,5 +85,66 @@ class UserController extends Controller
             'expires_in' => auth($this->guard)->factory()->getTTL() * 60,
             'user' => auth('api')->user()
         ]);
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAll()
+    {
+        return Grant::all();
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create_grant(Request $request)
+    {
+        return Grant::create($request->all());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function grant_by_id($id)
+    {
+        return Grant::find($id);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_grant(Request $request, $id)
+    {
+        $grant = Grant::find($id);
+        $grant->update($request->all());
+
+        return $grant;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete_grant($id)
+    {
+        return Grant::destroy($id);
     }
 }
