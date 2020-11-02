@@ -87,6 +87,24 @@ class GrantsAuthController extends Controller
         ]);
     }
 
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh() {
+        return $this->createNewToken(auth('api')->refresh());
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userProfile() {
+        return response()->json(auth('api')->user());
+    }
+
 
     /**
      * Display a listing of the resource.

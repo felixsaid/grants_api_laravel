@@ -16,6 +16,8 @@ Route::group([
 
 ], function ($router) {
     Route::post('login', 'App\Http\Controllers\GrantsAuthController@login');
+    Route::post('refresh', 'App\Http\Controllers\GrantsAuthController@refresh');
+    Route::get('userprofile', 'App\Http\Controllers\GrantsAuthController@userProfile');
     Route::post('register', 'App\Http\Controllers\GrantsAuthController@register');
     Route::get('/all_grants', 'App\Http\Controllers\GrantsAuthController@getAll');
     Route::post('/create_grant', 'App\Http\Controllers\GrantsAuthController@create_grant');
